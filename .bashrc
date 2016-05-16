@@ -27,7 +27,7 @@ alias l='ls -CF'
 source ~/.git-prompt.sh
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-export PS1="\[\033[38;5;15m\]:\[$(tput sgr0)\]\[\033[38;5;226m\]\w\[$(tput sgr0)\]\[\033[38;5;160m\]\$(__git_ps1)\[\033[38;5;15m\]> \[$(tput sgr0)\]"
+export PS1="\[\033[38;5;7m\]\u\[$(tput sgr0)\]@\[\033[38;5;255m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\]:\[$(tput sgr0)\]\[\033[38;5;226m\]\w\[$(tput sgr0)\]\[\033[38;5;160m\]\$(__git_ps1)\[\033[38;5;15m\]> \[$(tput sgr0)\]"
 
 
 if [[ $- == *i* ]]
