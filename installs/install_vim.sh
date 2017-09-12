@@ -17,7 +17,8 @@ cd vim
 	--enable-luainterp=yes \
 	--enable-cscope
 
-sudo checkinstall -y
+make
+sudo make install
 
 sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
 sudo update-alternatives --set editor /usr/local/bin/vim
