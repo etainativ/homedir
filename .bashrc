@@ -39,6 +39,7 @@ fi
 
 alias gs="git status"
 alias gd="git diff"
+alias tmux="tmux -2"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -51,7 +52,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+if [ -e /usr/share/terminfo/x/xterm+256color ]; then
         export TERM='xterm-256color'
 else
         export TERM='xterm-color'
