@@ -1,6 +1,7 @@
 set nocompatible              " be iMproved, required
 filetype off
 
+set t_Co=256
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -12,7 +13,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tComment'
+Plugin 'rking/ag.vim'
+" Plugin 'w0rp/ale'
 
 call vundle#end() 
 
@@ -20,12 +22,8 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
-		\ <CR> :!~/cscope_gen.sh .<CR>:cs reset<CR>
+map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
 map <C-n> :NERDTreeToggle<CR>
-
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
 
 " Tab stuff "
 set backspace=2
@@ -34,6 +32,9 @@ set softtabstop=2
 set shiftwidth=2
 set noexpandtab
 set laststatus=2
+
+" Search lock on the first match "
+set incsearch
 
 " Relative line numbering "
 set relativenumber
@@ -247,8 +248,8 @@ let g:airline_powerline_fonts = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                syntastic                                "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_error_symbol = 'X'
+let g:syntastic_warning_symbol = '?'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_python_checkers = ['pylama']
 let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
