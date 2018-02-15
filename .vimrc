@@ -15,6 +15,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
 " Plugin 'w0rp/ale'
+Bundle 'nathanalderson/yang.vim'
 
 call vundle#end() 
 
@@ -53,6 +54,9 @@ highlight LineNr ctermbg=NONE
 highlight LineNr gui=NONE
 highlight LineNr guifg=DarkGrey
 highlight LineNr guibg=NONE
+
+" fixing stupid highlight color"
+highlight YcmErrorSection ctermbg=red
 
 " 80 char marker
 set colorcolumn=80
@@ -263,3 +267,10 @@ let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_extra_conf_globlist = ['~/repos/*']
 let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
 let g:ycm_confirm_extra_conf = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              CtrlP				                              "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_max_files=0
+
