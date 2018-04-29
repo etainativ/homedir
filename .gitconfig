@@ -9,3 +9,6 @@
 	default = simple
 [core]
 	editor = vim
+
+[log]
+	decorate = true
