@@ -29,14 +29,14 @@ map <C-n> :NERDTreeToggle<CR>
 " Tab stuff "
 set backspace=2
 set laststatus=2
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+au BufNewFile,BufRead *.py:
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix |
 
 " annoying white spaces "
 highlight BadWhitespace ctermbg=red guibg=darkred
@@ -287,5 +287,3 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "                              CtrlP				                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_max_files=0
-
-
