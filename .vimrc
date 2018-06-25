@@ -23,6 +23,7 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
+map <leader>] :Ag <C-r><C-w><CR>
 map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
 map <C-n> :NERDTreeToggle<CR>
 
@@ -30,13 +31,13 @@ map <C-n> :NERDTreeToggle<CR>
 set backspace=2
 set laststatus=2
 au BufNewFile,BufRead *.py:
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix |
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
 
 " annoying white spaces "
 highlight BadWhitespace ctermbg=red guibg=darkred
@@ -287,3 +288,5 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "                              CtrlP				                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_max_files=0
+
+
