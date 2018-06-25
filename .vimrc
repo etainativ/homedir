@@ -17,7 +17,7 @@ Plugin 'rking/ag.vim'
 " Plugin 'w0rp/ale'
 Bundle 'nathanalderson/yang.vim'
 
-call vundle#end() 
+call vundle#end()
 
 
 filetype plugin indent on
@@ -28,11 +28,22 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Tab stuff "
 set backspace=2
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set noexpandtab
 set laststatus=2
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+" annoying white spaces "
+highlight BadWhitespace ctermbg=red guibg=darkred
+match BadWhitespace /\s\+$/
+
+" encoding "
+set encoding=utf-8
 
 " Search lock on the first match "
 set incsearch
@@ -70,13 +81,13 @@ map <C-j> <C-w>k	" move to lower pane
 map <C-l> <C-w>l	" move to right pane
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CSCOPE settings for vim           
+" CSCOPE settings for vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " This file contains some boilerplate settings for vim's cscope interface,
 " plus some keyboard mappings that I've found useful.
 "
-" USAGE: 
+" USAGE:
 " -- vim 6:     Stick this file in your ~/.vim/plugin directory (or in a
 "               'plugin' directory in some other directory that is in your
 "               'runtimepath'.
@@ -84,7 +95,7 @@ map <C-l> <C-w>l	" move to right pane
 " -- vim 5:     Stick this file somewhere and 'source cscope.vim' it from
 "               your ~/.vimrc file (or cut and paste it into your .vimrc).
 "
-" NOTE: 
+" NOTE:
 " These key maps use multiple keystrokes (2 or 3 keys).  If you find that vim
 " keeps timing you out before you can complete them, try changing your timeout
 " settings, as explained below.
@@ -96,7 +107,7 @@ map <C-l> <C-w>l	" move to right pane
 
 
 " This tests to see if vim was configured with the '--enable-cscope' option
-" when it was compiled.  If it wasn't, time to recompile vim... 
+" when it was compiled.  If it wasn't, time to recompile vim...
 if has("cscope")
 
     """"""""""""" Standard cscope/vim boilerplate
@@ -110,14 +121,14 @@ if has("cscope")
 
     " add any cscope database in current directory
     if filereadable("cscope.out")
-        cs add cscope.out  
-    " else add the database pointed to by environment variable 
+        cs add cscope.out
+    " else add the database pointed to by environment variable
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
 
     " show msg when any other cscope db added
-    set cscopeverbose  
+    set cscopeverbose
 
 
     """"""""""""" My cscope/vim key mappings
@@ -156,17 +167,17 @@ if has("cscope")
     " To do the first type of search, hit 'CTRL-\', followed by one of the
     " cscope search types above (s,g,c,t,e,f,i,d).  The result of your cscope
     " search will be displayed in the current window.  You can use CTRL-T to
-    " go back to where you were before the search.  
+    " go back to where you were before the search.
     "
 
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>	
+    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
     " Using 'CTRL-spacebar' (intepreted as CTRL-@ by vim) then a search type
@@ -175,19 +186,19 @@ if has("cscope")
     "
     " (Note: earlier versions of vim may not have the :scs command, but it
     " can be simulated roughly via:
-    "    nmap <C-@>s <C-W><C-S> :cs find s <C-R>=expand("<cword>")<CR><CR>	
+    "    nmap <C-@>s <C-W><C-S> :cs find s <C-R>=expand("<cword>")<CR><CR>
 
-    nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>	
-    nmap <C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>	
-    nmap <C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>	
-    nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>	
+    nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
 
 
-    " Hitting CTRL-space *twice* before the search type does a vertical 
+    " Hitting CTRL-space *twice* before the search type does a vertical
     " split instead of a horizontal one (vim 6 and up only)
     "
     " (Note: you may wish to put a 'set splitright' in your .vimrc
@@ -198,8 +209,8 @@ if has("cscope")
     nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
     nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
     nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>	
-    nmap <C-@><C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>	
+    nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-@><C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
 
@@ -209,7 +220,7 @@ if has("cscope")
     " You may find that too short with the above typemaps.  If so, you should
     " either turn off mapping timeouts via 'notimeout'.
     "
-    "set notimeout 
+    "set notimeout
     "
     " Or, you can keep timeouts, by uncommenting the timeoutlen line below,
     " with your own personal favorite value (in milliseconds):
@@ -222,7 +233,7 @@ if has("cscope")
     " delays as vim waits for a keystroke after you hit ESC (it will be
     " waiting to see if the ESC is actually part of a key code like <F1>).
     "
-    "set ttimeout 
+    "set ttimeout
     "
     " personally, I find a tenth of a second to work well for key code
     " timeouts. If you experience problems and have a slow terminal or network
@@ -267,10 +278,14 @@ let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_extra_conf_globlist = ['~/repos/*']
 let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
 let g:ycm_confirm_extra_conf = 1
+let g:ycm_python_binary_path = 'python'
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              CtrlP				                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_max_files=0
+
 
