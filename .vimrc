@@ -5,21 +5,48 @@ set t_Co=256
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-
-" Plugin 'vim-syntastic/syntastic'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'python-mode/python-mode'
-Plugin 'rhysd/vim-clang-format'
+" plugin manager
 Plugin 'VundleVim/Vundle.vim'
+
+"taglist management?
+" Plugin 'ludovicchabant/vim-gutentags.git' 
+
+" Fast searcg for expression in code (Ctrl+f f)
+Plugin 'dyng/ctrlsf.vim'
+
+" file finder with fuzzy logic, very slow find replacement
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() }}
+
+" Python stuff
+Plugin 'python-mode/python-mode'
+
+" running clang-format
+Plugin 'rhysd/vim-clang-format'
+
+" error checker
+Plugin 'vim-syntastic/syntastic'
+
+" Autocomplete + error correction, most usefull
 Plugin 'Valloric/YouCompleteMe'
+
+" GIT stuff 
 Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
+
+" nive status bar
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+" File explorer
 Plugin 'scrooloose/nerdtree'
-Plugin 'rking/ag.vim'
+
+" brief review of tags
+Plugin 'preservim/tagbar'
+" Plugin 'yegappan/taglist'
+
+" Plugin 'rking/ag.vim'
 " Plugin 'w0rp/ale'
-Bundle 'nathanalderson/yang.vim'
+" Bundle 'nathanalderson/yang.vim'
 
 call vundle#end()
 
@@ -27,21 +54,30 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-map <leader>] :Ag <C-r><C-w><CR>
-map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
+function! UpdateCscope()
+	silent !echo "\nLocating files"
+	silent !find . -name '*.c' -o -name "*.h" -o -name "*.py" > scope.files
+	silent !echo "Rebuilding cscope db..."
+	silent !cscope -b -q
+	silent !echo "Rebuilding ctags db..."
+	silent !ctags -L cscope.files
+	:redraw!
+	:cs reset
+endfunction
+
+" update cscope old and new "
+" map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
+map <F5> :call UpdateCscope()<CR>
+
+" Tagbar
+map <F8> :TagbarToggle<CR>
+
+" Nerd tree "
 map <C-n> :NERDTreeToggle<CR>
 
 " Tab stuff "
 set backspace=2
 set laststatus=2
-au BufNewFile,BufRead *.py:
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
 
 " annoying white spaces "
 highlight BadWhitespace ctermbg=red guibg=darkred
@@ -123,6 +159,9 @@ if has("cscope")
     " check cscope for definition of a symbol before checking ctags: set to 1
     " if you want the reverse search order.
     set csto=0
+
+    " remove and cscope databases
+    cs kill -1
 
     " add any cscope database in current directory
     if filereadable("cscope.out")
@@ -209,14 +248,14 @@ if has("cscope")
     " (Note: you may wish to put a 'set splitright' in your .vimrc
     " if you prefer the new window on the right instead of the left
 
-    nmap <C-@><C-@>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-@><C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-@><C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>s :tabnew %<CR>g:cs find s <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>g :tabnew %<CR>g:cs find g <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>c :tabnew %<CR>g:cs find c <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>t :tabnew %<CR>g:cs find t <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>e :tabnew %<CR>g:cs find e <C-R>=expand("<cword>")<CR><CR>
+    nmap <C-@><C-@>f :tabnew %<CR>g:cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nmap <C-@><C-@>i :tabnew %<CR>g:cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <C-@><C-@>d :tabnew %<CR>g:cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
     """"""""""""" key map timeouts
@@ -261,7 +300,7 @@ let g:NERDTreeMinimalUI=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "																	Airline	  														 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'papercolor'
 let g:airline_powerline_fonts = 1
 
 
@@ -297,13 +336,6 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              CtrlP				                              "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_max_files=0
-let g:ctrlp_working_path_mode = 0
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              CtrlSF	                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap     <C-F>f <Plug>CtrlSFPrompt
@@ -316,3 +348,10 @@ nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 let g:ctrlsf_default_view_mode = 'compact'
 let g:ctrlsf_search_mode = 'async'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              FZF	                              "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" I got used to Ctrlp so thats why thus shortcut
+map <C-P> :Files<CR>
