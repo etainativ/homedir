@@ -56,7 +56,7 @@ syntax on
 
 function! UpdateCscope()
 	silent !echo "\nLocating files"
-	silent !find . -name '*.c' -o -name "*.h" -o -name "*.py" > scope.files
+	silent !find . -name '*.c' -o -name "*.h" -o -name "*.py" > cscope.files
 	silent !echo "Rebuilding cscope db..."
 	silent !cscope -b -q
 	silent !echo "Rebuilding ctags db..."
@@ -325,13 +325,12 @@ let g:syntastic_check_on_wq = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              YouCompleteMe                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_extra_conf_globlist = ['~/repos/*']
 let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_python_binary_path = 'python'
-let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_autoclose_preview_window_after_completion = 1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
@@ -355,3 +354,4 @@ let g:ctrlsf_search_mode = 'async'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " I got used to Ctrlp so thats why thus shortcut
 map <C-P> :Files<CR>
+map <F3> :Tags<CR>
