@@ -69,6 +69,9 @@ endfunction
 " map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
 map <F5> :call UpdateCscope()<CR>
 
+" YCM goto definition "
+map <F4> :YcmCompleter GoToDeclaration<CR>
+
 " Tagbar
 map <F8> :TagbarToggle<CR>
 
