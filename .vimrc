@@ -21,6 +21,9 @@ Plugin 'junegunn/fzf', { 'do': { -> fzf#install() }}
 " Python stuff
 Plugin 'python-mode/python-mode'
 
+" Tmux line
+Plugin 'edkolev/tmuxline.vim'
+
 " running clang-format
 Plugin 'rhysd/vim-clang-format'
 
@@ -293,7 +296,7 @@ endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"																	NERDTree															 "
+"                               NERDTree                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeIgnore=['\.pyc', '\~$']
 let g:NERDTreeChDirMode=2
@@ -301,10 +304,33 @@ let g:NERDTreeMinimalUI=1
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"																	Airline	  														 "
+"                               Airline                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme = 'papercolor'
 let g:airline_powerline_fonts = 1
+let g:airline_skip_empty_sections = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline_section_z=airline#section#create(['%l/%L', ' : ','%c'])
+let g:airline_mode_map = {
+  \ '__'     : '-',
+  \ 'c'      : 'C',
+  \ 'i'      : 'I',
+  \ 'ic'     : 'I',
+  \ 'ix'     : 'I',
+  \ 'n'      : 'N',
+  \ 'multi'  : 'M',
+  \ 'ni'     : 'N',
+  \ 'no'     : 'N',
+  \ 'R'      : 'R',
+  \ 'Rv'     : 'R',
+  \ 's'      : 'S',
+  \ 'S'      : 'S',
+  \ ''     : 'S',
+  \ 't'      : 'T',
+  \ 'v'      : 'V',
+  \ 'V'      : 'V',
+  \ ''     : 'V',
+  \ }
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
