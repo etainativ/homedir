@@ -1,9 +1,12 @@
 [submodule "installs/vim"]
-	path = installs/vim
+	path = vim
 	url = https://github.com/vim/vim.git
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
 [submodule "installs/fzf"]
-	path = installs/fzf
+	path = fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "installs/tmux"]
+	path = tmux
+	url = https://github.com/tmux/tmux
