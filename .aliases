@@ -1,0 +1,11 @@
+
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias gs="git status"
+alias gd="git diff"
+alias tmux="tmux -2"
+
+

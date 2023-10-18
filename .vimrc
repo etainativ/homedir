@@ -8,8 +8,11 @@ call vundle#begin()
 " plugin manager
 Plugin 'VundleVim/Vundle.vim'
 
+" Use release branch (recommend)
+Plugin 'neoclide/coc.nvim'
+
 "taglist management?
-" Plugin 'ludovicchabant/vim-gutentags.git' 
+" Plugin 'ludovicchabant/vim-gutentags.git'
 
 " Fast searcg for expression in code (Ctrl+f f)
 Plugin 'dyng/ctrlsf.vim'
@@ -18,9 +21,6 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() }}
 
-" Python stuff
-Plugin 'python-mode/python-mode'
-
 " Tmux line
 Plugin 'edkolev/tmuxline.vim'
 
@@ -28,10 +28,7 @@ Plugin 'edkolev/tmuxline.vim'
 Plugin 'rhysd/vim-clang-format'
 
 " error checker
-Plugin 'vim-syntastic/syntastic'
-
-" Autocomplete + error correction, most usefull
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'vim-syntastic/syntastic'
 
 " GIT stuff 
 Plugin 'tpope/vim-fugitive'
@@ -51,39 +48,18 @@ Plugin 'preservim/tagbar'
 " Plugin 'w0rp/ale'
 " Bundle 'nathanalderson/yang.vim'
 
+Plugin 'github/copilot.vim'
 call vundle#end()
-
 
 filetype plugin indent on
 syntax on
 
-function! UpdateCscope()
-	silent !echo "\nLocating files"
-	silent !find . -name '*.c' -o -name "*.h" -o -name "*.py" > cscope.files
-	silent !echo "Rebuilding cscope db..."
-	silent !cscope -b -q
-	silent !echo "Rebuilding ctags db..."
-	silent !ctags -L cscope.files
-	:redraw!
-	:cs reset
-endfunction
-
-" update cscope old and new "
-" map <F5> :!~/cscope_gen.sh .<CR>:cs reset<CR>
-map <F5> :call UpdateCscope()<CR>
-
-" YCM goto definition "
-map <F4> :YcmCompleter GoToDeclaration<CR>
-
-" Tagbar
-map <F8> :TagbarToggle<CR>
-
-" Nerd tree "
-map <C-n> :NERDTreeToggle<CR>
-
 " Tab stuff "
 set backspace=2
 set laststatus=2
+
+" color correction
+set background=dark
 
 " annoying white spaces "
 highlight BadWhitespace ctermbg=red guibg=darkred
@@ -113,13 +89,9 @@ highlight LineNr gui=NONE
 highlight LineNr guifg=DarkGrey
 highlight LineNr guibg=NONE
 
-" fixing stupid highlight color"
-highlight YcmErrorSection ctermbg=red
-
 " 80 char marker
 set colorcolumn=80
 highlight ColorColumn ctermbg=darkgray
-
 
 " mapping pane move/resize shortcut "
 map <C-h> <C-w>h	" move to left pane
@@ -127,35 +99,27 @@ map <C-k> <C-w>j	" move to upper pane
 map <C-j> <C-w>k	" move to lower pane
 map <C-l> <C-w>l	" move to right pane
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CSCOPE settings for vim
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-" This file contains some boilerplate settings for vim's cscope interface,
-" plus some keyboard mappings that I've found useful.
-"
-" USAGE:
-" -- vim 6:     Stick this file in your ~/.vim/plugin directory (or in a
-"               'plugin' directory in some other directory that is in your
-"               'runtimepath'.
-"
-" -- vim 5:     Stick this file somewhere and 'source cscope.vim' it from
-"               your ~/.vimrc file (or cut and paste it into your .vimrc).
-"
-" NOTE:
-" These key maps use multiple keystrokes (2 or 3 keys).  If you find that vim
-" keeps timing you out before you can complete them, try changing your timeout
-" settings, as explained below.
-"
-" Happy cscoping,
-"
-" Jason Duell       jduell@alumni.princeton.edu     2002/3/7
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Settings CoC autocomplete menues
+hi CocFloating ctermbg=0 guibg=#e4e4e4
 
 
 " This tests to see if vim was configured with the '--enable-cscope' option
 " when it was compiled.  If it wasn't, time to recompile vim...
 if has("cscope")
+
+" update cscope "
+    function! UpdateCscope()
+    	silent !echo "\nLocating files"
+    	silent !find . -name '*.c' -o -name "*.h" -o -name "*.py" > cscope.files
+    	silent !echo "Rebuilding cscope db..."
+    	silent !cscope -b -q
+    	silent !echo "Rebuilding ctags db..."
+    	silent !ctags -L cscope.files
+    	:redraw!
+    	:cs reset
+    endfunction
+    map <F5> :call UpdateCscope()<CR>
 
     """"""""""""" Standard cscope/vim boilerplate
 
@@ -294,10 +258,18 @@ if has("cscope")
 
 endif
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               FileTypes                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType c setlocal shiftwidth=4
+autocmd FileType cpp setlocal shiftwidth=4
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               NERDTree                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeIgnore=['\.pyc', '\~$']
 let g:NERDTreeChDirMode=2
 let g:NERDTreeMinimalUI=1
@@ -306,7 +278,8 @@ let g:NERDTreeMinimalUI=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Airline                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:airline_theme = 'papercolor'
+"let g:airline_theme = 'peaksea'
+let g:airline_theme = 'etai'
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
@@ -352,18 +325,6 @@ let g:syntastic_check_on_wq = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              YouCompleteMe                              "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_min_num_identifier_candidate_chars = 4
-let g:ycm_extra_conf_globlist = ['~/repos/*']
-let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
-let g:ycm_confirm_extra_conf = 1
-let g:ycm_python_binary_path = 'python'
-let g:ycm_autoclose_preview_window_after_completion = 1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              CtrlSF	                              "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap     <C-F>f <Plug>CtrlSFPrompt
@@ -384,3 +345,24 @@ let g:ctrlsf_search_mode = 'async'
 " I got used to Ctrlp so thats why thus shortcut
 map <C-P> :Files<CR>
 map <F3> :Tags<CR>
+let $FZF_DEFAULT_COMMAND = 'ag -u --ignore .git -l ""'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Coc            	                          "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <c-@> coc#refresh()
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                             Tagbar                                      "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <F8> :TagbarToggle<CR>
+
