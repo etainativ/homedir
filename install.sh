@@ -53,3 +53,5 @@ sudo apt install nodejs
 # finishing coc installation
 cd ~/.vim/bundle/coc.nvim
 npm ci
+
+cp etai.vim ~/.vim/bundle/vim-airline-themes/autoload/airline/themes/etai.vim
