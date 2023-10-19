@@ -2,6 +2,7 @@ git submodule update --init
 
 sudo apt update
 sudo apt install \
+	silversearcher-ag \
 	ca-certificates \
 	curl \
 	gnupg \
@@ -39,7 +40,14 @@ sudo update-alternatives --remove-all vi
 sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
 sudo update-alternatives --set vi /usr/local/bin/vim
 
-cp -r .* ~
+cp -r .aliases \
+	.bash_profile \
+	.bashrc \
+	.git-prompt.sh \
+	.gitconfig \
+	.tmux.conf \
+	.tmux_completion.sh \
+	.vimrc ~
 
 vim +PluginInstall +qall
 
