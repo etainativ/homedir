@@ -1,7 +1,7 @@
 git submodule update --init
 
 sudo apt update
-sudo apt install \
+sudo apt install -y \
 	silversearcher-ag \
 	ca-certificates \
 	curl \
@@ -49,6 +49,7 @@ cp -r .aliases \
 	.tmux_completion.sh \
 	.vimrc ~
 
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
 
@@ -56,10 +57,11 @@ vim +PluginInstall +qall
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_21.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt update
-sudo apt install nodejs
+sudo apt install -y nodejs
 
 # finishing coc installation
 cd ~/.vim/bundle/coc.nvim
 npm ci
+cd -
 
 cp etai.vim ~/.vim/bundle/vim-airline-themes/autoload/airline/themes/etai.vim
