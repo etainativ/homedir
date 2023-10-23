@@ -21,7 +21,7 @@ cd tmux
 sudo make install
 
 cd ../fzf
-./install
+./install --all
 
 cd ../vim
 ./configure \
